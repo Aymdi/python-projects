@@ -5,6 +5,7 @@ Hangman implementation by Aymdi
 import random
 import string
 from words import words
+from hangman_visual import lives_visual_dict
 
 def get_valid_word(words):
     '''
@@ -25,9 +26,10 @@ def hangman():
         word_letters = set(word) # the missing word letters 
         alphabet = set(string.ascii_uppercase)
         used_letters = set() # the used letters by the player
-        lives = 10
+        lives = 7
         while len(word_letters)>0 and lives>0:
             print(f"You have {lives} lives left and you have used those letters: {used_letters}")
+            print(lives_visual_dict[lives])
             word_list = [letter if letter in used_letters else '-' for letter in word] # W-ORD
             print("Current word: ", ' '.join(word_list))
 
@@ -39,13 +41,14 @@ def hangman():
                     print("Nice !\n")
                 else:
                     lives -=1 # takes away a life if wrong
-                    print("You have chosen the letter {user_letter} and it's not in the word.")
+                    print(f"You have chosen the letter {user_letter} and it's not in the word.")
             elif user_letter in used_letters:
                 print("You have already used this letter. Guess another one.\n")
             else:
                 print("That is not valid letter.\n")
 
         if lives==0:
+            print(lives_visual_dict[lives])
             print(f"You died x(. The word was {word}.")
         else:
             print(f"Yay! You have correctly guessed the word {word} ! =D")
